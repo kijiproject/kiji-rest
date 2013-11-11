@@ -29,7 +29,7 @@ logfile=${BASEDIR}/logs/console.out
 
 DESC="Kiji REST"
 
-initiliazeDirectories() {
+initializeDirectories() {
   # attempt to find java (stolen from bigtop)
   if [ -z "$JAVA_HOME" ]; then
     for candidate in \
@@ -78,7 +78,7 @@ initiliazeDirectories() {
   fi
 }
 
-function checkstatusofproc(){
+function checkStatusOfProc(){
   # Check that the process itself is there.
   if [ -e ${PIDFILE} ]; then
     PID=$(cat ${PIDFILE})
@@ -98,7 +98,6 @@ function checkstatusofproc(){
 start() {
   echo "Starting ${DESC}"
 
-  mkdir -p ${BASEDIR}/logs
   mkdir -p ${BASEDIR}/logs/archives
 
   echo "Archiving old logs"
@@ -117,7 +116,7 @@ start() {
   #Check that the server came up properly
   for second in {0..30}
   do
-    checkstatusofproc
+    checkStatusOfProc
     RETVAL=$?
     if [ ${RETVAL} == 0 ]; then
       break
@@ -145,7 +144,7 @@ stop() {
   kill $pid
   for second in {5..0}
   do
-    retval=checkstatusofproc
+    retval=checkStatusOfProc
     if [ ${retval} != 0 ] ; then
       break
     fi
@@ -161,7 +160,7 @@ stop() {
 }
 
 checkstatus(){
-  checkstatusofproc
+  checkStatusOfProc
 }
 
 restart() {
@@ -184,16 +183,13 @@ service() {
     restart)
       restart
       ;;
-    condrestart|try-restart)
-      condrestart
-      ;;
     *)
-      echo $"Usage: $0 {start|stop|status|restart|try-restart|condrestart}"
+      echo $"Usage: $0 {start|stop|status|restart}"
       exit 1
   esac
 }
 
-initiliazeDirectories
+initializeDirectories
 service $1
 RETVAL=$?
 exit $RETVAL

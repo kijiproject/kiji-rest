@@ -37,7 +37,7 @@ KIJI_REST_USER="kiji"
 KIJI_REST_HOME="/opt/wibi/kiji-rest"
 
 #Setup some directories
-mkdir -p $RUNDIR
+mkdir -p ${RUNDIR}
 
 # ${LOCKDIR} is not a standard Linux directory, doesn't exist by default in ubuntu
 mkdir -p ${LOCKDIR}
